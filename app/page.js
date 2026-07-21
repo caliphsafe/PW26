@@ -76,8 +76,8 @@ export default function HomePage() {
           </div>
 
           <figure className="product-photo">
-            <img src="/panther-patrol-shirt.png" alt="Panther Patrol T Shirt placeholder mockup" />
-            <figcaption>Paperweight Panther Patrol T Shirt · replace this placeholder with the final product image.</figcaption>
+            <img src="/panther-patrol-shirt.png" alt="Paperweight Panther Patrol T Shirt" />
+            <figcaption>Paperweight Panther Patrol T Shirt · First edition, limited press run.</figcaption>
           </figure>
 
           <aside className="order-panel" id="order">
