@@ -152,7 +152,7 @@ export default function HomePage() {
             <div className="total-line"><span>Panther Patrol T Shirt</span><strong>$20.00</strong></div>
             <button className="checkout" onClick={beginCheckout}>Order The Shirt</button>
             {error && <p className="error" role="alert">{error}</p>}
-            <p className="delivery-copy">Free local delivery is available in New Bedford, Boston, and surrounding areas. Standard shipping is $5.</p>
+            <p className="delivery-copy">Free local delivery is available in New Bedford, Boston, and surrounding areas. Standard shipping is $7.</p>
           </aside>
         </section>
 
