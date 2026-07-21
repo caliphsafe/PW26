@@ -30,7 +30,6 @@ export default function HomePage() {
   const [size, setSize] = useState('L');
   const [cut, setCut] = useState('Classic');
   const [activeImage, setActiveImage] = useState(0);
-  const [revealedImages, setRevealedImages] = useState({});
   const [error, setError] = useState('');
 
   function beginCheckout() {
@@ -43,13 +42,6 @@ export default function HomePage() {
     }
 
     window.location.href = link;
-  }
-
-  function toggleImage(index) {
-    setRevealedImages((current) => ({
-      ...current,
-      [index]: !current[index],
-    }));
   }
 
   return (
@@ -90,17 +82,11 @@ export default function HomePage() {
                 <button
                   key={image.src}
                   type="button"
-                  className={`product-slide ${activeImage === index ? 'active' : ''} ${revealedImages[index] ? 'revealed' : ''}`}
-                  onClick={() => toggleImage(index)}
-                  onPointerDown={(event) => {
-                    if (event.pointerType !== 'mouse') {
-                      setRevealedImages((current) => ({ ...current, [index]: true }));
-                    }
-                  }}
-                  aria-label={`${image.alt}. Tap to switch between newspaper print and full color.`}
+                  className={`product-slide ${activeImage === index ? 'active' : ''}`}
+                  onClick={() => setActiveImage((index + 1) % productImages.length)}
+                  aria-label={`${image.alt}. View next product image.`}
                 >
                   <img src={image.src} alt={image.alt} />
-                  <span className="print-screen" aria-hidden="true" />
                 </button>
               ))}
 
@@ -120,7 +106,6 @@ export default function HomePage() {
                 </button>
               ))}
             </div>
-            <p className="gallery-note">Tap the photograph to reveal the original color.</p>
           </div>
 
           <aside className="order-panel" id="order">
