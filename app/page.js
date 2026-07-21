@@ -54,10 +54,10 @@ export default function HomePage() {
 
       <article className="newspaper-shell">
         <header className="masthead">
-          <div className="issue-box">VOL. 01<br />ISSUE 01</div>
+          <div className="issue-box issue-image-box"><img src="/pwman.png" alt="Paperweight Panther Patrol issue mark" /></div>
           <div>
             <p className="eyebrow">Paperweight Community Goods</p>
-            <h1>PAPERWEIGHT</h1>
+            <div className="masthead-logo-wrap"><img className="masthead-logo" src="/PW.png" alt="Paperweight" /></div>
             <p className="submast">Independent clothing, printed with purpose.</p>
           </div>
           <div className="price-box">$20<br /><small>+ shipping</small></div>
@@ -76,7 +76,7 @@ export default function HomePage() {
           </div>
 
           <figure className="product-photo">
-            <img src="/panther-patrol-shirt.png" alt="Panther Patrol T Shirt placeholder mockup" />
+            <img src="/panther-patrol-shirt.svg" alt="Panther Patrol T Shirt placeholder mockup" />
             <figcaption>Paperweight Panther Patrol T Shirt · replace this placeholder with the final product image.</figcaption>
           </figure>
 
