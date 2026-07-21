@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100">
+  <rect width="900" height="1100" fill="#bcb198"/>
+  <g opacity=".12" stroke="#111" stroke-width="1">
+    <path d="M0 100h900M0 220h900M0 340h900M0 460h900M0 580h900M0 700h900M0 820h900M0 940h900"/>
+  </g>
+  <path d="M305 180 185 260 80 420l120 70 62-88v520h376V402l62 88 120-70-105-160-120-80c-30 70-78 100-145 100s-115-30-145-100Z" fill="#171714" stroke="#111" stroke-width="12"/>
+  <path d="M342 192c24 44 60 66 108 66s84-22 108-66" fill="none" stroke="#e9dfc6" stroke-width="16"/>
+  <rect x="290" y="400" width="320" height="305" fill="#e9dfc6"/>
+  <text x="450" y="455" text-anchor="middle" font-family="Impact,Arial Narrow,sans-serif" font-size="50" fill="#111">PAPERWEIGHT</text>
+  <line x1="320" y1="480" x2="580" y2="480" stroke="#111" stroke-width="5"/>
+  <text x="450" y="548" text-anchor="middle" font-family="Impact,Arial Narrow,sans-serif" font-size="72" fill="#111">PANTHER</text>
+  <text x="450" y="620" text-anchor="middle" font-family="Impact,Arial Narrow,sans-serif" font-size="72" fill="#111">PATROL</text>
+  <text x="450" y="672" text-anchor="middle" font-family="Georgia,serif" font-style="italic" font-size="25" fill="#111">product image placeholder</text>
+  <text x="450" y="1030" text-anchor="middle" font-family="Arial,sans-serif" font-weight="700" font-size="22" fill="#111">REPLACE /public/panther-patrol-shirt.svg WITH YOUR FINAL PRODUCT PHOTO</text>
+</svg>
