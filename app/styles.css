@@ -46,8 +46,8 @@ button, a { color: inherit; }
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px;
-  border: 2px solid var(--ink);
+  padding: 0;
+  border: 0;
   background: transparent;
 }
 .issue-art img { width: 100%; max-height: 98px; object-fit: contain; }
@@ -125,10 +125,13 @@ button, a { color: inherit; }
 }
 .headline-column h1 {
   margin: 0;
+  display: grid;
+  gap: clamp(8px, 1.1vw, 16px);
   font-size: clamp(58px, 7vw, 105px);
-  line-height: .82;
+  line-height: .9;
   letter-spacing: -.035em;
 }
+.headline-column h1 span { display: block; }
 .lead-copy {
   margin: 18px 0 0;
   padding-top: 13px;
@@ -323,12 +326,12 @@ legend {
 .story-art {
   min-height: 320px;
   margin: 0;
-  padding: 8px;
+  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid var(--ink);
-  background: rgba(255,255,255,.14);
+  border: 0;
+  background: transparent;
 }
 .story-art img {
   display: block;
@@ -372,8 +375,18 @@ footer {
   .masthead-logo { max-height: 68px; }
   .date-rule { font-size: 8px; gap: 8px; }
   .hero-grid { display: block; }
-  .headline-column { border-right: 0; padding: 0 0 16px; }
-  .headline-column h1 { font-size: clamp(62px, 21vw, 98px); }
+  .headline-column { border-right: 0; padding: 0 0 16px; text-align: center; }
+  .headline-column h1 {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: .22em;
+    white-space: nowrap;
+    font-size: clamp(29px, 9.3vw, 62px);
+    line-height: 1;
+    letter-spacing: -.025em;
+  }
+  .headline-column h1 span { display: inline; }
   .lead-copy { font-size: 15px; }
   .gallery-frame { min-height: 520px; }
   .order-panel { margin-top: 18px; }
@@ -388,7 +401,7 @@ footer {
   .masthead { grid-template-columns: 60px minmax(0,1fr) 60px; }
   .issue-art, .price-stamp { min-height: 58px; }
   .price-stamp strong { font-size: 23px; }
-  .headline-column h1 { font-size: 66px; }
+  .headline-column h1 { font-size: clamp(27px, 9vw, 39px); }
   .gallery-frame { min-height: 430px; }
   .choice-grid.four { gap: 5px; }
   .choice { min-height: 44px; font-size: 13px; }
