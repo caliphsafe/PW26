@@ -2,7 +2,7 @@ import './styles.css';
 
 export const metadata = {
   title: 'Panther Patrol T Shirt — Paperweight',
-  description: 'A one-item release from Paperweight. Available cropped or classic cut while supplies last.',
+  description: 'The Panther Patrol T Shirt, a one-item release from Paperweight.',
 };
 
 export default function RootLayout({ children }) {

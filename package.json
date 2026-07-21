@@ -1,6 +1,6 @@
 {
   "name": "paperweight-panther-patrol",
-  "version": "2.0.2",
+  "version": "3.0.0",
   "private": true,
   "packageManager": "pnpm@9.15.9",
   "engines": {

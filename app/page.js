@@ -1,14 +1,9 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 
 const sizes = ['S', 'M', 'L', 'XL'];
 const cuts = ['Classic', 'Cropped'];
-
-const inventory = {
-  Classic: { S: 2, M: 3, L: 5, XL: 5 },
-  Cropped: { S: 3, M: 2, L: 5, XL: 5 },
-};
 
 const paymentLinks = {
   Classic: {
@@ -25,70 +20,125 @@ const paymentLinks = {
   },
 };
 
+const productImages = [
+  { src: '/shirt1.png', alt: 'Panther Patrol T Shirt front view' },
+  { src: '/shirt2.png', alt: 'Panther Patrol T Shirt detail view' },
+  { src: '/panther-patrol-shirt.png', alt: 'Paperweight Panther Patrol T Shirt' },
+];
+
 export default function HomePage() {
   const [size, setSize] = useState('L');
   const [cut, setCut] = useState('Classic');
+  const [activeImage, setActiveImage] = useState(0);
+  const [revealedImages, setRevealedImages] = useState({});
   const [error, setError] = useState('');
-
-  const allocation = useMemo(() => inventory[cut][size], [cut, size]);
 
   function beginCheckout() {
     setError('');
     const link = paymentLinks[cut][size];
 
     if (!link || !link.startsWith('https://')) {
-      setError(`The Stripe link for ${cut} / ${size} has not been added yet.`);
+      setError('This edition is temporarily unavailable. Please choose another option.');
       return;
     }
 
     window.location.href = link;
   }
 
-  return (
-    <main>
-      <div className="top-strip">
-        <span>Paperweight Special Edition</span>
-        <span>New Bedford · Massachusetts</span>
-        <span>One Item Release</span>
-      </div>
+  function toggleImage(index) {
+    setRevealedImages((current) => ({
+      ...current,
+      [index]: !current[index],
+    }));
+  }
 
+  return (
+    <main className="site-wrap">
       <article className="newspaper-shell">
         <header className="masthead">
-          <div className="issue-box issue-image-box"><img src="/pwman.png" alt="Paperweight Panther Patrol issue mark" /></div>
-          <div>
-            <p className="eyebrow">Paperweight Community Goods</p>
-            <div className="masthead-logo-wrap"><img className="masthead-logo" src="/PW.png" alt="Paperweight" /></div>
-            <p className="submast">Independent clothing, printed with purpose.</p>
+          <div className="issue-art">
+            <img src="/pwman.png" alt="Paperweight issue artwork" />
           </div>
-          <div className="price-box">$20<br /><small>+ shipping</small></div>
+
+          <div className="masthead-center">
+            <p className="edition-line">Paperweight Community Goods · New Bedford, Massachusetts</p>
+            <img className="masthead-logo" src="/PW.png" alt="Paperweight" />
+            <p className="edition-line bottom">Independent clothing printed with purpose</p>
+          </div>
+
+          <div className="price-stamp" aria-label="Price twenty dollars plus shipping">
+            <strong>$20</strong>
+            <span>plus shipping</span>
+          </div>
         </header>
 
-        <div className="rule-row">
+        <div className="date-rule">
           <span>THE PANTHER PATROL EDITION</span>
-          <span>LIMITED TO 30 SHIRTS</span>
+          <span>ONE ITEM RELEASE</span>
         </div>
 
-        <section className="lead-grid">
+        <section className="hero-grid">
           <div className="headline-column">
-            <p className="kicker">New Release</p>
-            <h2>PANTHER<br />PATROL<br />T SHIRT</h2>
-            <p className="deck">A wearable newspaper headline about organized observation, community protection, and the people-powered programs that made history.</p>
+            <p className="section-slug">New Release</p>
+            <h1>Panther<br />Patrol<br />T Shirt</h1>
+            <p className="lead-copy">A wearable front-page statement honoring organized observation, community defense, and the broader tradition of serving people through direct action.</p>
           </div>
 
-          <figure className="product-photo">
-            <img src="/panther-patrol-shirt.png" alt="Paperweight Panther Patrol T Shirt" />
-            <figcaption>Paperweight Panther Patrol T Shirt · First edition, limited press run.</figcaption>
-          </figure>
+          <div className="gallery-column" aria-label="Panther Patrol product gallery">
+            <div className="gallery-frame">
+              {productImages.map((image, index) => (
+                <button
+                  key={image.src}
+                  type="button"
+                  className={`product-slide ${activeImage === index ? 'active' : ''} ${revealedImages[index] ? 'revealed' : ''}`}
+                  onClick={() => toggleImage(index)}
+                  onPointerDown={(event) => {
+                    if (event.pointerType !== 'mouse') {
+                      setRevealedImages((current) => ({ ...current, [index]: true }));
+                    }
+                  }}
+                  aria-label={`${image.alt}. Tap to switch between newspaper print and full color.`}
+                >
+                  <img src={image.src} alt={image.alt} />
+                  <span className="print-screen" aria-hidden="true" />
+                </button>
+              ))}
+
+              <div className="gallery-counter">{String(activeImage + 1).padStart(2, '0')} / 03</div>
+            </div>
+
+            <div className="gallery-nav" aria-label="Choose product image">
+              {productImages.map((image, index) => (
+                <button
+                  key={`nav-${image.src}`}
+                  type="button"
+                  className={activeImage === index ? 'active' : ''}
+                  onClick={() => setActiveImage(index)}
+                  aria-label={`View product image ${index + 1}`}
+                >
+                  {String(index + 1).padStart(2, '0')}
+                </button>
+              ))}
+            </div>
+            <p className="gallery-note">Tap the photograph to reveal the original color.</p>
+          </div>
 
           <aside className="order-panel" id="order">
-            <p className="panel-label">Order Copy</p>
-            <h3>Choose your edition</h3>
+            <p className="section-slug dark">Order Form</p>
+            <h2>Choose Your Shirt</h2>
 
             <fieldset>
               <legend>Cut</legend>
               <div className="choice-grid two">
                 {cuts.map((option) => (
-                  <button key={option} type="button" className={cut === option ? 'choice active' : 'choice'} onClick={() => setCut(option)}>{option}</button>
+                  <button
+                    key={option}
+                    type="button"
+                    className={cut === option ? 'choice active' : 'choice'}
+                    onClick={() => setCut(option)}
+                  >
+                    {option}
+                  </button>
                 ))}
               </div>
             </fieldset>
@@ -97,52 +147,54 @@ export default function HomePage() {
               <legend>Size</legend>
               <div className="choice-grid four">
                 {sizes.map((option) => (
-                  <button key={option} type="button" className={size === option ? 'choice active' : 'choice'} onClick={() => setSize(option)}>
-                    {option}<small>{inventory[cut][option]} released</small>
+                  <button
+                    key={option}
+                    type="button"
+                    className={size === option ? 'choice active' : 'choice'}
+                    onClick={() => setSize(option)}
+                  >
+                    {option}
                   </button>
                 ))}
               </div>
             </fieldset>
 
             <div className="selection-summary">
-              <span>Selected edition</span>
+              <span>Selected</span>
               <strong>{cut} · {size}</strong>
-              <small>{allocation} available at launch</small>
             </div>
 
-            <div className="total-line"><span>Shirt</span><strong>$20.00</strong></div>
-            <button className="checkout" onClick={beginCheckout}>Continue to Secure Checkout</button>
+            <div className="total-line"><span>Panther Patrol T Shirt</span><strong>$20.00</strong></div>
+            <button className="checkout" onClick={beginCheckout}>Order The Shirt</button>
             {error && <p className="error" role="alert">{error}</p>}
-            <p className="fineprint">Stripe Checkout will collect your address and let you choose free local delivery or $5 standard shipping. Each edition automatically closes when its allotted quantity sells.</p>
+            <p className="delivery-copy">Free local delivery is available in New Bedford, Boston, and surrounding areas. Standard shipping is $5.</p>
           </aside>
         </section>
 
         <section className="story-grid">
-          <div className="story story-large">
-            <h3>Patrol Was Only Part of the Story</h3>
-            <p className="byline">A short historical note for this Paperweight release</p>
-            <p>The Black Panther Party for Self Defense was founded in Oakland in 1966. Its members became known for confronting political power, challenging abusive policing, and organizing to protect Black citizens from brutality.</p>
-            <p>But the movement was also built around practical community care. Its “survival programs” provided essentials such as food, clothing, transportation, health support, and education. The work connected self-determination to everyday needs.</p>
-            <p>This shirt takes its name from the organized patrols that helped make the party visible, while the full piece honors the larger idea: community safety includes watching power, sharing resources, and serving people.</p>
+          <div className="story story-main">
+            <h2>Patrol Was Only Part of the Story</h2>
+            <p className="byline">The history behind the Panther Patrol release</p>
+            <div className="article-columns">
+              <p>The Black Panther Party for Self Defense was founded in Oakland in 1966. Its members became known for confronting political power, challenging abusive policing, and organizing to protect Black citizens from brutality.</p>
+              <p>The party also built practical community programs around everyday needs. These “survival programs” provided food, clothing, transportation, health support, and education while connecting self-determination to direct service.</p>
+              <p>The Panther Patrol T Shirt takes its name from the organized patrols that made the party visible, while recognizing the larger idea behind the movement: community safety also means sharing resources, caring for people, and building power together.</p>
+            </div>
           </div>
 
-          <div className="story quote-story">
-            <span className="black-box">COMMUNITY / ACTION</span>
-            <blockquote>Protection meant more than observation. It also meant food, clothing, transportation, education, health, and organized care.</blockquote>
+          <div className="story story-quote">
+            <p className="section-slug">Community / Action</p>
+            <blockquote>Protection was not only about watching power. It was also about feeding, educating, transporting, and caring for the community.</blockquote>
           </div>
 
-          <div className="story inventory-story">
-            <h3>Press Run: 30</h3>
-            <p><strong>Classic — 15</strong><br />S: 2 · M: 3 · L: 5 · XL: 5</p>
-            <p><strong>Cropped — 15</strong><br />S: 3 · M: 2 · L: 5 · XL: 5</p>
-            <p>Each cut and size has its own limited Stripe checkout link. When that edition reaches its sales limit, Stripe automatically closes the link.</p>
-            <a href="#order">Order from the front page →</a>
-          </div>
+          <figure className="story-art">
+            <img src="/pw1.png" alt="Paperweight Panther Patrol artwork" />
+          </figure>
         </section>
 
         <footer>
           <span>© Paperweight</span>
-          <span>Panther Patrol T Shirt · Limited Release</span>
+          <span>Panther Patrol T Shirt</span>
           <a href="https://nmaahc.si.edu/explore/stories/black-panther-party-challenging-police-and-promoting-social-change" target="_blank" rel="noreferrer">Historical source: NMAAHC</a>
         </footer>
       </article>
